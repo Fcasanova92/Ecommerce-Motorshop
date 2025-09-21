@@ -1,0 +1,1 @@
+en esta carpeta estarian las paginas, por ejemplo Home.jsx, Register.jsx. Login.jsx, Productos.jsx ---> los cuales estaran envueltos por los layouts

@@ -1,0 +1,1 @@
+en esta carpeta estara el o los contextos para la aplicacion, de manera de compartir data entre componente o estados generales necesarios

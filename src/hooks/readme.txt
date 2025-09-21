@@ -1,0 +1,1 @@
+en esta carpeta tendremos los hooks generales que se utilizaran (podrian estar los hooks de una posible api)
