@@ -1,7 +1,7 @@
 import { List } from "../List";
 import { ListItem } from "../ListItem";
 import { UserSessionLink } from "./components/UserSessionItem";
-import { menuItems } from "./constant/menuItem";
+import { headerItems } from "./constant/headerItem";
 import "./Header.css";
 
 export const Header = () => {
@@ -11,7 +11,7 @@ export const Header = () => {
         <Icon name = {"fa-solid fa-motorcycle fa-tw"} />
         <List type = {"ul"} className = {"menu"}>
           {
-            menuItems.map((item) => {
+            headerItems.map((item) => {
               <ListItem>
                 <Link className="link-a" to={item.path}>
                   {item.label}
