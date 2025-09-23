@@ -1,4 +1,5 @@
 import { Title } from "@/components/Title"
+import { Text } from "../Text"
 
 export const Banner = () => {
 
