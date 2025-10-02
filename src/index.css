@@ -401,12 +401,6 @@ form .message {
     margin: 2rem auto 0 auto;
 }
 
-.data-fiscal-thumbnail {
-    width: 20%;
-    margin: 0 auto;
-    display: block;
-}
-
 /* <<-------------------------------------------- Efectos --------------------------------------------->> */
 
 .fx-deep-shadow-static, .fx-deep-shadow-dinamyc {
