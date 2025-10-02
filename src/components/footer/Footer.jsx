@@ -1,4 +1,9 @@
+import { Icon } from "../Icon";
+import { List } from "../List";
+import { ListItem } from "../ListItem";
+import { Title } from "../Title";
 import { footerItem } from "./constant/footerItem";
+import qrAfip from "@/assets/img/qr_afip/data_fiscal.png"
 
 export const Footer = () => {
   return (
@@ -23,7 +28,7 @@ export const Footer = () => {
         </div>
         <img
           className="data-fiscal-thumbnail"
-          src="./static/img/qr_afip/data_fiscal.png"
+          src={qrAfip}
           alt="QR data fiscal"
         />
       </div>

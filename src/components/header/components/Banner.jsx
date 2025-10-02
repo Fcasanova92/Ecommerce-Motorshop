@@ -1,5 +1,7 @@
 import { Title } from "@/components/Title"
 import { Text } from "../Text"
+import bannerImg from "@/assets/img/banners/banner.png";
+import { Link } from "react-router";
 
 export const Banner = () => {
 
@@ -19,7 +21,7 @@ export const Banner = () => {
         <div className="media">
           <img
             className="banner-thumbnail"
-            src="./static/img/banners/banner.png"
+            src={bannerImg}
             alt="Imagen introductoria de la web"
             draggable="false"
           />

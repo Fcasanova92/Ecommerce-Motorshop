@@ -1,5 +1,6 @@
+import { Icon } from "@/components/Icon";
 import { ListItem } from "@/components/ListItem";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 export const UserSessionLink = () => {
   return (
