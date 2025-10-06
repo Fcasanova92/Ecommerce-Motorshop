@@ -1,6 +1,7 @@
 
 import { Spinner } from '@/components/Spinner';
 import { useAuth } from '@/hooks/useAuth';
+import { PathConfig } from '@/utils/pathConfig';
 import { Navigate } from 'react-router';
 
 export const PrivateRouter = ({ children }) => {
@@ -11,7 +12,7 @@ export const PrivateRouter = ({ children }) => {
   }
 
   if (!isLogin) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to={PathConfig.Login} replace />;
   }
 
   return children;

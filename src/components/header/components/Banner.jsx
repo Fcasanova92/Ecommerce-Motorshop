@@ -1,7 +1,7 @@
 import { Title } from "@/components/Title"
-import { Text } from "../Text"
 import bannerImg from "@/assets/img/banners/banner.png";
 import { Link } from "react-router";
+import { Text } from "@/components/Text";
 
 export const Banner = () => {
 
