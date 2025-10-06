@@ -1,84 +1,9 @@
-/* <<-------------------------------------------- Formularios -------------------------------------------->> */
-
-form .message {
-    display: none;
+.messageFormError {
+  color: red;
+  font-size: 0.7rem;   /* tamaño un poco más pequeño que el input */
+  margin-top: 4px;     /* espacio sobre el input */
+  display: block;      /* para que ocupe su propio renglón */
+  font-weight: bold;   /* opcional: más visible */
 }
 
-#filter {
-    padding: 0.8rem;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-}
 
-#search-bar {
-    display: flex;
-    flex-direction: row;
-    gap: 0.28rem;
-}
-
-#search-bar > input{
-    width: 100%;
-    display: block;
-}
-
-#login, #register {
-    width: 40%;
-    border-radius: 6px;
-    margin: 5rem auto;
-    padding: 0.8rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    background-color: #fff;
-}
-
-#login > .headline, #register > .headline {
-    margin-bottom: 0px;
-}
-
-#login > .headline > i, #register > .headline > i{
-    color: #6b6b6b;
-}
-
-#login > a, #register > a {
-    text-align: center;
-}
-
-#login > .pass, #register > .pass {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.6rem;
-}
-
-#login > .pass > input, #register > .pass > input {
-    flex-grow: 1;
-}
-
-#register > #condicion {
-
-    display: flex;
-    flex-flow: row nowrap;
-    column-gap: 1vw;
-}
-
-.checkbox-field {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.checkbox-field input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-  accent-color: #0077ff;
-}
-
-.checkbox-field label.with-check-icon {
-  font-size: 0.95rem;
-  color: #333;
-  line-height: 1; /* importante para centrar con el input */
-  cursor: pointer;
-}

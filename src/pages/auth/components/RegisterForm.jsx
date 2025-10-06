@@ -5,6 +5,7 @@ import { validateInput } from "../helpers/validateInput";
 import { PathConfig } from "@/utils/pathConfig";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "@/hooks/useAuth";
+import '../styles/authStyle.css';
 
 export const RegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -37,7 +38,18 @@ export const RegisterForm = () => {
     e.preventDefault();
     setMessage("");
 
-    const hasErrors = Object.values(errors).some((msg) => msg);
+    // Validar todos los campos
+    const newErrors = {
+      name: validateInput("name", formData.name),
+      surname: validateInput("surname", formData.surname),
+      email: validateInput("email", formData.email),
+      password: validateInput("password", formData.password),
+    };
+
+    setErrors(newErrors);
+
+    // Si hay errores
+    const hasErrors = Object.values(newErrors).some((msg) => msg);
     if (hasErrors) {
       setMessage("Por favor corrige los errores antes de continuar.");
       return;
@@ -53,13 +65,12 @@ export const RegisterForm = () => {
       surname: formData.surname,
       email: formData.email,
       password: formData.password,
-      online:true
+      online: true,
     });
 
     if (success) {
       setMessage("Registro exitoso. Ya puedes iniciar sesión.");
-      navigate(PathConfig.Home);
-
+      navigate(PathConfig.Home, {state: {email: formData.email}});
     } else {
       setMessage("Error: El email ya está registrado.");
     }
@@ -73,7 +84,6 @@ export const RegisterForm = () => {
           <i className="fa-regular fa-address-card"></i>
         </div>
 
-        <label className="message" htmlFor="name">{errors.name}</label>
         <input
           id="name"
           type="text"
@@ -81,8 +91,8 @@ export const RegisterForm = () => {
           value={formData.name}
           onChange={handleChange}
         />
+        {errors.name && <span className="messageFormError" color="red">{errors.name}</span>}
 
-        <label className="message" htmlFor="surname">{errors.surname}</label>
         <input
           id="surname"
           type="text"
@@ -90,8 +100,8 @@ export const RegisterForm = () => {
           value={formData.surname}
           onChange={handleChange}
         />
+        {errors.surname && <span className="messageFormError" color="red">{errors.surname}</span>}
 
-        <label className="message" htmlFor="email">{errors.email}</label>
         <input
           id="email"
           type="text"
@@ -99,8 +109,8 @@ export const RegisterForm = () => {
           value={formData.email}
           onChange={handleChange}
         />
+        {errors.email && <span className="messageFormError" color="red">{errors.email}</span>}
 
-        <label className="message" htmlFor="password">{errors.password}</label>
         <div className="pass">
           <input
             id="password"
@@ -115,6 +125,7 @@ export const RegisterForm = () => {
             onClick={() => togglePasswordVisibility(setShowPassword)}
           ></i>
         </div>
+        {errors.password && <span className="messageFormError" color="red">{errors.password}</span>}
 
         <div className="checkbox-field">
           <input
@@ -134,7 +145,7 @@ export const RegisterForm = () => {
           Enviar
         </button>
 
-        {message && <label className="message">{message}</label>}
+        {message && <span className="messageFormError" color="red">{message}</span>}
 
         <Link className={"link-c"} to={PathConfig.Login}>
           ¿Tienes cuenta? Inicia sesión aquí

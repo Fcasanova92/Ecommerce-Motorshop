@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import '../styles/authStyle.css';
 import { validateInput } from "../helpers/validateInput";
 import { togglePasswordVisibility } from "../helpers/passwordVisuality";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { PathConfig } from "@/utils/pathConfig";
-import { useAuth } from "../hooks/useAuth"; // <-- Import del hook
+import { useAuth } from "@/hooks/useAuth";
 
 export const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -15,8 +15,9 @@ export const LoginForm = () => {
 
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
-  const { login, message, setMessage, isOnline } = useAuth();
+  const { login, message, setMessage } = useAuth();
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -28,19 +29,26 @@ export const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setMessage("");
 
-    const hasErrors = Object.values(errors).some((e) => e);
+    // Validar todos los campos antes de enviar
+    const newErrors = {
+      email: validateInput("email", formData.email),
+      password: validateInput("password", formData.password),
+    };
+    setErrors(newErrors);
 
-    if (hasErrors || !formData.email || !formData.password) {
+    const hasErrors = Object.values(newErrors).some((msg) => msg);
+    if (hasErrors) {
       setMessage("Por favor, corrige los errores antes de continuar.");
       return;
     }
 
     const success = login(formData.email, formData.password);
+
     if (success) {
       setMessage("Inicio de sesión exitoso. Redirigiendo...");
-      // redirigir si querés
-      // setTimeout(() => (window.location.href = "/"), 1500);
+      navigate(PathConfig.Home, { state: { email: formData.email } });
     } else {
       setMessage("Error al iniciar sesión. Revisa tus credenciales.");
     }
@@ -54,7 +62,7 @@ export const LoginForm = () => {
           <i className="fa-solid fa-right-to-bracket"></i>
         </div>
 
-        <label className="message" htmlFor="email">{errors.email}</label>
+        {errors.email && <span className="messageFormError">{errors.email}</span>}
         <input
           id="email"
           type="text"
@@ -63,7 +71,7 @@ export const LoginForm = () => {
           onChange={handleChange}
         />
 
-        <label className="message" htmlFor="password">{errors.password}</label>
+        {errors.password && <span className="messageFormError">{errors.password}</span>}
         <div className="pass">
           <input
             id="password"
@@ -87,8 +95,7 @@ export const LoginForm = () => {
           ¿No tienes cuenta? Registrate aquí
         </Link>
 
-        {message && <label className="message">{message}</label>}
-        <p>Estado online: {isOnline ? "Sí" : "No"}</p>
+        {message && <span className="messageFormError">{message}</span>}
       </form>
     </section>
   );

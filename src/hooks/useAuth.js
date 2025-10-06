@@ -1,22 +1,26 @@
+// useAuth.js
 import { useState, useEffect } from "react";
-import { useUsers } from "./useUsers";
+import { useUsers } from "./useUser";
 
 export const useAuth = () => {
-  const { users, setUsers, loading } = useUsers();
+  const { users, setUsers } = useUsers();
+
+  const [currentUser, setCurrentUser] = useState(
+    JSON.parse(localStorage.getItem("currentUser")) || null
+  );
   const [message, setMessage] = useState("");
-  const [currentUser, setCurrentUser] = useState(null);
-  const [isOnline, setIsOnline] = useState(false);
+
+  const isOnline = !!currentUser?.online;
 
   useEffect(() => {
-    setIsOnline(currentUser ? currentUser.online : false);
+    if (currentUser) {
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    } else {
+      localStorage.removeItem("currentUser");
+    }
   }, [currentUser]);
 
   const login = (email, password) => {
-    if (!email || !password) {
-      setMessage("Completa todos los campos");
-      return false;
-    }
-
     const userIndex = users.findIndex(
       (u) => u.email === email && u.password === password
     );
@@ -27,7 +31,6 @@ export const useAuth = () => {
       setUsers(updatedUsers);
       setCurrentUser(updatedUsers[userIndex]);
       setMessage("Inicio de sesión exitoso");
-      setIsOnline(true);
       return true;
     } else {
       setMessage("Usuario o contraseña incorrecta");
@@ -43,10 +46,9 @@ export const useAuth = () => {
     setUsers(updatedUsers);
     setCurrentUser(null);
     setMessage("Has cerrado sesión");
-    setIsOnline(false);
   };
 
-  const register = ({ name, surname, email, password, online }) => {
+    const register = ({ name, surname, email, password, online }) => {
     if (!name || !surname || !email || !password) {
       setMessage("Completa todos los campos");
       return false;
@@ -58,8 +60,7 @@ export const useAuth = () => {
       return false;
     }
 
-    // Generar un ID simple
-    const newId = users.length ? Math.max(...users.map(u => u.id)) + 1 : 1;
+    const newId = users.length ? Math.max(...users.map((u) => u.id)) + 1 : 1;
 
     const newUser = {
       id: newId,
@@ -67,14 +68,13 @@ export const useAuth = () => {
       surname,
       email,
       password,
-      online
+      online,
     };
 
-    const updatedUsers = [...users, newUser];
-    setUsers(updatedUsers);
+    setUsers([...users, newUser]);
     setMessage("Usuario registrado con éxito");
     return true;
   };
 
-  return { login, logout, register, message, setMessage, loading, currentUser, isOnline };
+  return { login, logout, register, message, setMessage, currentUser, isOnline };
 };

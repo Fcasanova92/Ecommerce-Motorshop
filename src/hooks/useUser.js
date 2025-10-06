@@ -5,30 +5,26 @@ export const useUsers = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const storedUsers = localStorage.getItem("users");
-        if (storedUsers) {
-          setUsers(JSON.parse(storedUsers));
-        } else {
-          const response = await fetch("/users.json");
-          if (!response.ok) throw new Error("No se pudo cargar users.json");
-          const data = await response.json();
-
-          // Agregamos online: false a cada usuario
-          const usersWithOnline = data.map(u => ({ ...u, online: false }));
-
-          setUsers(usersWithOnline);
-          localStorage.setItem("users", JSON.stringify(usersWithOnline));
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUsers();
+    // Cargar desde localStorage
+    const storedUsers = localStorage.getItem("users");
+    if (storedUsers) {
+      setUsers(JSON.parse(storedUsers));
+    } else {
+      // Inicializamos con un usuario de prueba si no hay nada
+      const initialUsers = [
+        {
+          id: 1,
+          name: "Admin",
+          surname: "User",
+          email: "admin@test.com",
+          password: "123456",
+          online: false,
+        },
+      ];
+      localStorage.setItem("users", JSON.stringify(initialUsers));
+      setUsers(initialUsers);
+    }
+    setLoading(false);
   }, []);
 
   const updateUsers = (updatedUsers) => {

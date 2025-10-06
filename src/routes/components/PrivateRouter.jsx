@@ -1,19 +1,15 @@
-
-import { Spinner } from '@/components/Spinner';
-import { useAuth } from '@/hooks/useAuth';
-import { PathConfig } from '@/utils/pathConfig';
-import { Navigate } from 'react-router';
+// PrivateRouter.jsx
+import { useAuth } from "@/hooks/useAuth";
+import { Navigate } from "react-router";
+import { Spinner } from "@/components/Spinner";
+import { PathConfig } from "@/utils/pathConfig";
 
 export const PrivateRouter = ({ children }) => {
-  const {isLoading, isLogin } = useAuth();
+  const { currentUser, isOnline } = useAuth();
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+  if (currentUser === null) return <Spinner />; // mientras carga
 
-  if (!isLogin) {
-    return <Navigate to={PathConfig.Login} replace />;
-  }
+  if (!isOnline) return <Navigate to={PathConfig.Login} replace />;
 
   return children;
 };
