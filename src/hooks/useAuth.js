@@ -9,15 +9,17 @@ export const useAuth = () => {
   const navigate = useNavigate();
 
   const [currentUser, setCurrentUser] = useState(
-    JSON.parse(localStorage.getItem("users")) || null
+    JSON.parse(localStorage.getItem("users")) || []
   );
   const [message, setMessage] = useState("");
 
-  const isOnline = currentUser ? currentUser[0]?.online : false;
+  const isOnline = currentUser[0]?.online;
 
   useEffect(() => {
     if (currentUser) {
       localStorage.setItem("users", JSON.stringify(currentUser));
+    } else {
+      localStorage.removeItem("users");
     }
   }, [currentUser]);
 
@@ -42,11 +44,9 @@ export const useAuth = () => {
   const logout = () => {
   if (!currentUser) return;
 
-
   const updatedUsers = users.map((u) =>
     u.email === currentUser[0].email ? { ...u, online: false } : u
   );
-
   
   setUsers(updatedUsers);
   setCurrentUser(null);

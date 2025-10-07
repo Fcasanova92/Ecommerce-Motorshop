@@ -3,10 +3,12 @@ import moto from "@/assets/img/products/motorcycle.png";
 import { getRandomMillionDecimalFormatted } from "./helpers/getPrice";
 import { useNavigate } from "react-router";
 import { PathConfig } from "@/utils/pathConfig";
+import { useAppContext } from "@/context/AppContext";
 
-export const Card = ({data, onAddToCart}) => {
+export const Card = ({data}) => {
 
   const navigate = useNavigate();
+  const {agregarProducto} = useAppContext();
 
   return (
     <article className="card fx-deep-shadow-dinamyc fx-move-up">
@@ -38,7 +40,7 @@ export const Card = ({data, onAddToCart}) => {
             </span>
             <button
               className="add-to-cart"
-              onClick={() => onAddToCart?.(data)}
+              onClick={() => agregarProducto(data)}
             >
               🛒 Agregar al carrito
             </button>

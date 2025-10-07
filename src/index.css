@@ -527,7 +527,7 @@ form .message {
 
 .card-track, #card-wrapper, .location-wrapper {
     display: grid;
-    gap: 0.8rem;
+    gap: 1.3rem;
     grid-auto-rows: auto;
 }
 

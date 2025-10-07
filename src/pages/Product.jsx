@@ -1,12 +1,14 @@
 import React from "react";
-import { useLocation } from "react-router";
+import {  useLocation } from "react-router";
 import moto from "@/assets/img/products/motorcycle.png"; // placeholder
 import { getRandomMillionDecimalFormatted } from "@/components/helpers/getPrice";
 import { MainLayout } from "@/layouts/MainLayout";
+import { useAppContext } from "@/context/AppContext";
 
-export const Product = ({ onAddToCart }) => {
+export const Product = () => {
   const location = useLocation();
   const product = location.state?.product;
+   const {agregarProducto} = useAppContext();
 
   if (!product) {
     return <p>Producto no encontrado.</p>;
@@ -38,7 +40,7 @@ export const Product = ({ onAddToCart }) => {
           {/* Botón agregar al carrito */}
           <button
             className="add-to-cart"
-            onClick={() => onAddToCart?.(product)}
+            onClick={() => agregarProducto(product)}
           >
             🛒 Agregar al carrito
           </button>
