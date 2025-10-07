@@ -5,9 +5,9 @@ import { Spinner } from "@/components/Spinner";
 import { PathConfig } from "@/utils/pathConfig";
 
 export const PrivateRouter = ({ children }) => {
-  const { currentUser, isOnline } = useAuth();
+  const { loading, isOnline } = useAuth();
 
-  if (currentUser === null) return <Spinner />; // mientras carga
+  if (loading) return <Spinner />; // mientras carga
 
   if (!isOnline) return <Navigate to={PathConfig.Login} replace />;
 

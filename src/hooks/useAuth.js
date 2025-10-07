@@ -8,12 +8,17 @@ export const useAuth = () => {
   const { users, setUsers } = useUsers();
   const navigate = useNavigate();
 
-  const [currentUser, setCurrentUser] = useState(
-    JSON.parse(localStorage.getItem("users")) || []
-  );
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true); // <-- nuevo estado
   const [message, setMessage] = useState("");
 
-  const isOnline = currentUser[0]?.online;
+  const isOnline = currentUser ? currentUser[0]?.online : false;
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("users"));
+    if (storedUser) setCurrentUser(storedUser);
+    setLoading(false); // terminamos de cargar
+  }, []);
 
   useEffect(() => {
     if (currentUser) {
@@ -23,16 +28,16 @@ export const useAuth = () => {
     }
   }, [currentUser]);
 
+  // login, logout, register igual que antes
   const login = (email, password) => {
     const userIndex = users.findIndex(
       (u) => u.email === email && u.password === password
     );
-
     if (userIndex !== -1) {
       const updatedUsers = [...users];
       updatedUsers[userIndex].online = true;
       setUsers(updatedUsers);
-      setCurrentUser(updatedUsers[userIndex]);
+      setCurrentUser([updatedUsers[userIndex]]);
       setMessage("Inicio de sesión exitoso");
       return true;
     } else {
@@ -42,23 +47,16 @@ export const useAuth = () => {
   };
 
   const logout = () => {
-  if (!currentUser) return;
+    if (!currentUser) return;
+    const updatedUsers = users.map((u) =>
+      u.email === currentUser[0].email ? { ...u, online: false } : u
+    );
+    setUsers(updatedUsers);
+    setMessage("Has cerrado sesión");
+    navigate(PathConfig.Login);
+  };
 
-  const updatedUsers = users.map((u) =>
-    u.email === currentUser[0].email ? { ...u, online: false } : u
-  );
-  
-  setUsers(updatedUsers);
-  setCurrentUser(null);
-  
-  // guardamos en localStorage
-  localStorage.setItem("users", JSON.stringify(updatedUsers));
-  
-  setMessage("Has cerrado sesión");
-  navigate(PathConfig.Login);
-};
-
-    const register = ({ name, surname, email, password, online }) => {
+  const register = ({ name, surname, email, password, online }) => {
     if (!name || !surname || !email || !password) {
       setMessage("Completa todos los campos");
       return false;
@@ -78,7 +76,7 @@ export const useAuth = () => {
       surname,
       email,
       password,
-      online,
+      online
     };
 
     setUsers([...users, newUser]);
@@ -86,5 +84,5 @@ export const useAuth = () => {
     return true;
   };
 
-  return { login, logout, register, message, setMessage, currentUser, isOnline };
+  return { login, logout, register, message, setMessage, currentUser, isOnline, loading };
 };
