@@ -1,17 +1,12 @@
 import React from "react";
 import moto from "@/assets/img/products/motorcycle.png";
+import { getRandomMillionDecimalFormatted } from "./helpers/getPrice";
+import { useNavigate } from "react-router";
+import { PathConfig } from "@/utils/pathConfig";
 
-export const Card = ({ data, onAddToCart }) => {
-  const getRandomMillionDecimalFormatted = () => {
-    const min = 1_000_000;
-    const max = 3_000_000;
-    const random = Math.random() * (max - min) + min;
+export const Card = ({data, onAddToCart}) => {
 
-    return random.toLocaleString("es-ES", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
-  };
+  const navigate = useNavigate();
 
   return (
     <article className="card fx-deep-shadow-dinamyc fx-move-up">
@@ -25,7 +20,7 @@ export const Card = ({ data, onAddToCart }) => {
 
       <div className="supporting-text">
         <p className="overline">MODELO</p>
-        <h3 className="title-c">{data.model}</h3>
+        <h3 className="title-c">{data.make}</h3>
         <p className="caption">
           {data.model} | {data.cooling} | {data.year}
         </p>
@@ -38,7 +33,7 @@ export const Card = ({ data, onAddToCart }) => {
           </div>
 
           <ul className="actions">
-            <span className="see">
+            <span className="see" onClick={() => navigate(PathConfig.Product, {state: {product:data}})}>
               <i className="fa-regular fa-eye"></i>
             </span>
             <button

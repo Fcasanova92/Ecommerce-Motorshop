@@ -6,8 +6,6 @@ export const useObtenerProductos = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  console.log(config.apiMotorKey)
-
   useEffect(() => {
     const fetchProductos = async () => {
       try {
@@ -27,7 +25,6 @@ export const useObtenerProductos = () => {
         setError(err.message);
       } finally {
         setLoading(false);
-        console.log("Finalizó la petición (éxito o error)");
       }
     };
 

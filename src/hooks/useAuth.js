@@ -1,22 +1,23 @@
 // useAuth.js
 import { useState, useEffect } from "react";
 import { useUsers } from "./useUser";
+import { useNavigate } from "react-router";
+import { PathConfig } from "@/utils/pathConfig";
 
 export const useAuth = () => {
   const { users, setUsers } = useUsers();
+  const navigate = useNavigate();
 
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(localStorage.getItem("users")) || null
   );
   const [message, setMessage] = useState("");
 
-  const isOnline = currentUser[0]?.online;
+  const isOnline = currentUser ? currentUser[0]?.online : false;
 
   useEffect(() => {
     if (currentUser) {
       localStorage.setItem("users", JSON.stringify(currentUser));
-    } else {
-      localStorage.removeItem("users");
     }
   }, [currentUser]);
 
@@ -39,14 +40,23 @@ export const useAuth = () => {
   };
 
   const logout = () => {
-    if (!currentUser) return;
-    const updatedUsers = users.map((u) =>
-      u.email === currentUser.email ? { ...u, online: false } : u
-    );
-    setUsers(updatedUsers);
-    setCurrentUser(null);
-    setMessage("Has cerrado sesión");
-  };
+  if (!currentUser) return;
+
+
+  const updatedUsers = users.map((u) =>
+    u.email === currentUser[0].email ? { ...u, online: false } : u
+  );
+
+  
+  setUsers(updatedUsers);
+  setCurrentUser(null);
+  
+  // guardamos en localStorage
+  localStorage.setItem("users", JSON.stringify(updatedUsers));
+  
+  setMessage("Has cerrado sesión");
+  navigate(PathConfig.Login);
+};
 
     const register = ({ name, surname, email, password, online }) => {
     if (!name || !surname || !email || !password) {

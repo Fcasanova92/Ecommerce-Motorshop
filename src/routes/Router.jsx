@@ -6,6 +6,7 @@ import {PublicRouter} from "@/routes/components/PublicRouter"
 import {PrivateRouter} from "@/routes/components/PrivateRouter"
 import { Home } from "@/pages/Home"
 import { PathConfig } from "@/utils/pathConfig"
+import { Product } from "@/pages/Product"
 
 export const Router = () => {
 
@@ -13,6 +14,7 @@ export const Router = () => {
         <Routes>
             <Route path="/*" element={<PublicRouter />}/>
             <Route path={PathConfig.Home} element={<PrivateRouter><Home/></PrivateRouter>} />
+            <Route path={PathConfig.Product} element={<PrivateRouter><Product/></PrivateRouter>} />
         </Routes>
     )
 }

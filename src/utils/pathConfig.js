@@ -2,5 +2,6 @@ export const PathConfig = {
 
     Home : "/",
     Login : "/login",
-    Register: "/register"
+    Register: "/register",
+    Product: "product"
 }

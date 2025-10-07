@@ -2,12 +2,15 @@ import { Link } from "react-router";
 import { Icon } from "../Icon";
 import { List } from "../List";
 import { ListItem } from "../ListItem";
-import { UserSessionLink } from "./components/UserSessionItem";
+import { LoginHeader } from "./components/LoginHeader";
 import { headerItems } from "./constant/headerItem";
 import "./Header.css";
 import { Banner } from "@/components/header/components/Banner";
+import { useAuth } from "@/hooks/useAuth";
+import { User } from "./components/User";
 
 export const Header = () => {
+  const {isOnline}  = useAuth();
   return (
     <header>
       <nav id="primary">
@@ -15,14 +18,21 @@ export const Header = () => {
         <List type = {"ul"} className = {"menu"}>
           {
             headerItems.map((item) => {
-              <ListItem>
-                <Link className="link-a" to={item.path}>
-                  {item.label}
-                </Link>
-              </ListItem>
+                    return (
+            <ListItem key={item.path}>
+              <Link className="link-a" to={item.path}>
+                {item.label}
+              </Link>
+            </ListItem>
+             );
             })
           }
-            <UserSessionLink  />
+          {
+            isOnline ?
+            <User />
+            :
+            <LoginHeader/>
+          }
         </List>
       </nav>
       <Banner/>

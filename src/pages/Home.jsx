@@ -2,13 +2,12 @@ import { MainLayout } from "@/layouts/MainLayout";
 import shop from "@/assets/img/branchs/shop_a.png";
 import { useObtenerProductos } from "@/hooks/useObtenerProductos";
 import { Card } from "@/components/Card";
+import { CardSkeleton } from "@/components/skeleton/producto/CardSkeleton";
 
 export const Home = () => {
   // funciones para eventos
-  const {productos} = useObtenerProductos()
-
-  console.log(productos)
-
+  const {productos, loading} = useObtenerProductos();
+  
   return (
     <MainLayout>
       <main>
@@ -16,8 +15,11 @@ export const Home = () => {
           <div className="headline">
             <h2 className="title-b">Productos</h2>
           </div>
-          {
-            productos.slice(0,10).map((product) => <> <Card  data = {product}/></>)
+
+          {loading ?
+            <CardSkeleton number={10} />
+            :
+            productos.slice(0,10).map((product, index) => <Card key={index} data={product} isLoading={loading}/>)
           }
         </section>
 
