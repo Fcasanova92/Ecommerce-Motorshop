@@ -6,17 +6,17 @@ export const useAuth = () => {
   const { users, setUsers } = useUsers();
 
   const [currentUser, setCurrentUser] = useState(
-    JSON.parse(localStorage.getItem("currentUser")) || null
+    JSON.parse(localStorage.getItem("users")) || null
   );
   const [message, setMessage] = useState("");
 
-  const isOnline = !!currentUser?.online;
+  const isOnline = currentUser[0]?.online;
 
   useEffect(() => {
     if (currentUser) {
-      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+      localStorage.setItem("users", JSON.stringify(currentUser));
     } else {
-      localStorage.removeItem("currentUser");
+      localStorage.removeItem("users");
     }
   }, [currentUser]);
 

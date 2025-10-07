@@ -133,6 +133,7 @@ html {
     color: #8d8d8d;
     font-size: 1rem;
     letter-spacing: 0.4px;
+    align-self: center;
 }
 
 .price > .title {
@@ -173,6 +174,21 @@ input, label {
 }
 
 /* <<------------------------------------- Enlaces, Inputs y Botones ------------------------------------->> */
+
+.add-to-cart {
+  background-color: #5e6061;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.add-to-cart:hover {
+  background-color: #0056b3;
+}
 
 fieldset > legend {
     margin-bottom: 0.6rem;
@@ -573,6 +589,8 @@ form .message {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    column-gap: 0.4rem;
 }
 
 .card > .supporting-text > .footer > .price  {
@@ -600,7 +618,6 @@ form .message {
     align-items: flex-start;
     justify-content: space-between;
     gap: 0.8rem;
-    position: relative;
 }
 
 #products > .headline {

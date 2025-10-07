@@ -9,21 +9,7 @@ export const useUsers = () => {
     const storedUsers = localStorage.getItem("users");
     if (storedUsers) {
       setUsers(JSON.parse(storedUsers));
-    } else {
-      // Inicializamos con un usuario de prueba si no hay nada
-      const initialUsers = [
-        {
-          id: 1,
-          name: "Admin",
-          surname: "User",
-          email: "admin@test.com",
-          password: "123456",
-          online: false,
-        },
-      ];
-      localStorage.setItem("users", JSON.stringify(initialUsers));
-      setUsers(initialUsers);
-    }
+    } 
     setLoading(false);
   }, []);
 
